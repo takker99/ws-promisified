@@ -31,11 +31,11 @@ export function openWS(url: string, protcols?: string | string[]) {
         },
         receive: async function* () {
           while (true) {
-            const response = await new Promise((res, rej) => {
+            const response = await new Promise<MessageEvent>((res, rej) => {
               once(socket, "message", (e) => res(e));
               once(socket, "error", (e) => rej(e));
             });
-            yield response as MessageEvent;
+            yield response;
           }
         },
       }));
